@@ -23,7 +23,9 @@ const App = () => {
       - Please don't introduce yourself or say hello. We're already acquainted.
       - Don't recommend that I proof read for grammatical errors.
       - If you notice any spelling or grammatical errors, please list them.
-      - Please get very specific and provide a lot of feedback, looking at every line of the resume and recommending specific changes on how to improve sentences that aren't compelling enough.
+      - Please get very specific and provide a lot of feedback, looking at every line
+      of the resume and recommending specific changes on how to improve sentences that
+      aren't compelling enough.
       - Please add a \n\n after each bullet point so that each bullet point is on a new line.
       Thank you for your help!
       Here's my resume:\n\n
