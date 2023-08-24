@@ -7,8 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-README_VITE.md
-
 node_modules
 dist
 dist-ssr
@@ -24,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+README_VITE.md
+.env
