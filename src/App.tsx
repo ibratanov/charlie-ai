@@ -5,6 +5,8 @@ import Footer from './components/Footer'
 import TextInput from './components/TextInput'
 import FeedbackModal from './components/FeedbackModal'
 
+import DOMPurify from 'dompurify'
+
 const App = () => {
   const [feedback, setFeedback] = useState('')
   const [isOpen, setIsOpen] = useState(false)
@@ -14,21 +16,29 @@ const App = () => {
     setLoading(true)
     setIsOpen(true)
     const prompt: string = `
-      You are a technical recruiter named Charlie. Your goal is to help candidates
-      land their dream job by assisting with their job search. Please be kind and
-      friendly, and give direct feedback on the resume provided. I'd like it to
-      perform well in applicant tracking systems and I'd like it to be easy to read.
-      Break your suggested changes up into actionable items in bullet form so I know
-      what to address first. A few more things to keep in mind:
-      - Please don't introduce yourself or say hello. We're already acquainted.
-      - Don't recommend that I proof read for grammatical errors.
-      - If you notice any spelling or grammatical errors, please list them.
-      - Please get very specific and provide a lot of feedback, looking at every line
-      of the resume and recommending specific changes on how to improve sentences that
-      aren't compelling enough.
-      - Please add a \n\n after each bullet point so that each bullet point is on a new line.
-      Thank you for your help!
-      Here's my resume:\n\n
+      Please provide specific feedback on the resume provided. The goal is to optimize the resume for
+      both applicant tracking systems and human recruiters. Offer detailed suggestions for improvement
+      while maintaining a kind and friendly tone. Feel free to address every section of the resume,
+      offering specific changes for sentences that lack compelling content. Avoid introducing yourself
+      and refrain from recommending proofreading for grammatical errors. If you spot any spelling or
+      grammatical errors, please list them as suggestions. Please do not include a revised resume in your response.
+      Your response should only contain HTML code and be structured exactly as follows:
+      <div>
+        <strong>Suggested resume edits:</strong>
+        <ol>
+          <li><strong>[Suggestion]</strong></li>
+          <li><strong>[Suggestion2]</strong>
+            <ul>
+              <li>[Sub-suggestion]</li>
+              <li>[Sub-suggestion2]</li>
+              ...
+            </ul>
+          </li>
+          ...
+        </ol>
+      </div>
+      Note: '[Suggestion]' and '[Sub-suggestion]' are placeholders.
+      Here's the resume:\n\n
     `
 
     const options = {
@@ -40,9 +50,9 @@ const App = () => {
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
         messages: [
-          {"role": "system", "content": prompt + text + ''},
+          {"role": "system", "content": '{ "prompt": "' + prompt + text + '", "output_format": "html" }'},
         ],
-        temperature: 0.5,
+        temperature: 0.2,
         frequency_penalty: 0.8
       })
     }
@@ -53,7 +63,9 @@ const App = () => {
 
     const data = json.choices[0].message.content
 
-    setFeedback(data)
+    const cleanData = DOMPurify.sanitize(data)
+
+    setFeedback(cleanData)
     setLoading(false)
   }
 

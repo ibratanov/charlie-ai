@@ -9,7 +9,9 @@ import {
     ModalBody,
     ModalCloseButton,
     CircularProgress,
-  } from '@chakra-ui/react'
+} from '@chakra-ui/react'
+
+import parse from 'html-react-parser'
 
 type FeedbackModalProps = {
   feedback: string
@@ -24,13 +26,17 @@ const FeedbackModal = ({ feedback, loading, isOpen, closeModal }: FeedbackModalP
       <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Feedback</ModalHeader>
+          <ModalHeader>
+            {loading ? 'Sit tight! I\'m looking over your resume...' : 'I have some ideas!'}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody display='flex' alignItems='center' justifyContent='center'>
             {loading ? (
               <CircularProgress isIndeterminate color='blue.200' />
             ) : (
-              <Text>{feedback}</Text>
+              <Text color='black' fontSize={15} marginBottom='0.4rem'>
+                {parse(feedback)}
+              </Text>
             )}
           </ModalBody>
 
