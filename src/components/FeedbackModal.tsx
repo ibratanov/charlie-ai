@@ -26,7 +26,9 @@ const FeedbackModal = ({ feedback, loading, isOpen, closeModal }: FeedbackModalP
       <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Here are some ways you could improve your resume.</ModalHeader>
+          <ModalHeader>
+            {loading ? 'Sit tight! I\'m looking over your resume...' : 'I have some ideas!'}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody display='flex' alignItems='center' justifyContent='center'>
             {loading ? (
