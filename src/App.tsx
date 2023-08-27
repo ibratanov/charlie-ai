@@ -53,7 +53,7 @@ const App = () => {
           {"role": "system", "content": '{ "prompt": "' + prompt + text + '", "output_format": "html" }'},
         ],
         temperature: 0.2,
-        frequency_penalty: 0.8,
+        frequency_penalty: 0.8
       })
     }
 
@@ -74,7 +74,7 @@ const App = () => {
   }
 
   return (
-    <Box bg='blue.400' color='white' h='100vh' >
+    <Box bg='blue.400' color='white' height='100vh' paddingTop={130}>
       <Container maxW='3xl' centerContent>
         <Header />
         <TextInput generateFeedback={generateFeedback} />
